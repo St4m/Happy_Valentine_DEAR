@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Congratulations | New Beginnings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sage: #d4e2d4;
+      --moss: #5b7b5a;
+      --forest: #2c4a3b;
+      --cream: #f9f6ed;
+      --paper: #fffcf5;
+      --blush: #e8b4a2;
+      --shadow: rgba(44, 74, 59, 0.2);
+    }
+
+    * { 
+      box-sizing: border-box; 
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #e2eee2, #c8ddc8);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--forest);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Floating petals/tulip shapes */
+    .floating-petal {
+      position: fixed;
+      pointer-events: none;
+      opacity: 0.2;
+      font-size: 24px;
+      animation: sway 20s infinite alternate ease-in-out;
+      z-index: 0;
+    }
+
+    @keyframes sway {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(30px, -20px) rotate(15deg); }
+    }
+
+    .container {
+      padding: 24px;
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Tulip Garden */
+    .tulip-garden {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      margin-bottom: 16px;
+      height: 100px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .tulip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: bottom center;
+    }
+
+    .tulip.bloom {
+      transform: translateY(-8px);
+    }
+
+    .tulip-flower {
+      font-size: 32px;
+      line-height: 1;
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: bottom center;
+      filter: drop-shadow(0 4px 6px var(--shadow));
+    }
+
+    .tulip.bud .tulip-flower {
+      transform: scale(0.6) translateY(10px);
+      opacity: 0.7;
+      filter: drop-shadow(0 2px 4px var(--shadow));
+    }
+
+    .tulip.bloom .tulip-flower {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    .tulip-stem {
+      width: 4px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--moss), var(--forest));
+      border-radius: 2px;
+      margin-top: -6px;
+      box-shadow: 0 4px 6px var(--shadow);
+    }
+
+    .tulip-leaf {
+      width: 20px;
+      height: 12px;
+      background: linear-gradient(135deg, #7fa07e, #5b7b5a);
+      border-radius: 80% 0 40% 20%;
+      transform: rotate(10deg) skewX(-3deg);
+      margin-top: -6px;
+      margin-right: -10px;
+      align-self: flex-end;
+      box-shadow: -2px 2px 6px rgba(44, 74, 59, 0.3);
+    }
+
+    /* Envelope */
+    .envelope {
+      position: relative;
+      width: 100%;
+      background: #e1d3c4;
+      border-radius: 16px 16px 12px 12px;
+      box-shadow: 0 20px 40px var(--shadow);
+      cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(2px);
+    }
+
+    .envelope:hover { 
+      transform: translateY(-4px);
+      box-shadow: 0 25px 45px var(--shadow);
+    }
+
+    .flap {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 28%;
+      background: linear-gradient(135deg, #eeddce, #e0cbb8);
+      clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%);
+      transform-origin: top;
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 15;
+      border-bottom: 2px dashed var(--blush);
+    }
+
+    .seal {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: var(--blush);
+      border-radius: 50%;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cream);
+      font-size: 24px;
+      box-shadow: 0 6px 12px var(--shadow);
+      transition: all 0.5s ease;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .letter {
+      background: var(--paper);
+      border-radius: 12px 12px 8px 8px;
+      padding: 28px 24px;
+      box-shadow: inset 0 0 0 1px #f0e2d7, 0 12px 20px -12px var(--shadow);
+      transform: translateY(0);
+      transition: transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+      margin: 0 12px 12px 12px;
+      border: 1px solid #e8d9cc;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      padding: 0 24px;
+    }
+
+    .envelope.open .letter {
+      max-height: 600px;
+      opacity: 1;
+      padding: 28px 24px;
+      transform: translateY(-12px);
+    }
+
+    .letter h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      margin: 0 0 16px 0;
+      color: var(--forest);
+      text-align: center;
+      position: relative;
+    }
+
+    .letter h1::after {
+      content: '🌷';
+      font-size: 20px;
+      margin-left: 10px;
+      opacity: 0.7;
+    }
+
+    .letter p {
+      font-size: 15px;
+      line-height: 1.7;
+      margin: 0 0 16px 0;
+      color: var(--forest);
+    }
+
+    .signature {
+      margin-top: 28px;
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      text-align: right;
+      color: var(--moss);
+      border-top: 2px dotted #d4c3b5;
+      padding-top: 16px;
+    }
+
+    .signature strong {
+      color: var(--forest);
+      font-weight: 700;
+    }
+
+    /* Open state */
+    .envelope.open .flap {
+      transform: rotateX(170deg) translateY(-10px);
+      opacity: 0.9;
+    }
+
+    .envelope.open .seal {
+      opacity: 0;
+      transform: translateX(-50%) scale(0.5);
+      pointer-events: none;
+    }
+
+    /* Hint */
+    .hint {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--forest);
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(4px);
+      padding: 10px 20px;
+      border-radius: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    /* Floating elements animation */
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+      100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+    }
+
+    .floating-element {
+      position: fixed;
+      bottom: -20px;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatUp 8s linear infinite;
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorative background tulips/petals -->
+  <div class="floating-petal" style="top: 10%; left: 5%;">🌷</div>
+  <div class="floating-petal" style="bottom: 20%; right: 8%;">💖</div>
+  <div class="floating-petal" style="top: 30%; right: 15%;">❤️</div>
+  <div class="floating-petal" style="bottom: 40%; left: 10%;">💋</div>
+
+  <div class="container">
+    <!-- Tulip Garden (outside envelope) -->
+    <div class="tulip-garden" id="tulipGarden">
+      <div class="tulip bud" id="tulip1">
+        <span class="tulip-flower">🌷</span>
+        <div class="tulip-stem"></div>
+        <div class="tulip-leaf"></div>
+      </div>
+      <div class="tulip bud" id="tulip2">
+        <span class="tulip-flower">🌷</span>
+        <div class="tulip-stem"></div>
+        <div class="tulip-leaf"></div>
+      </div>
+      <div class="tulip bud" id="tulip3">
+        <span class="tulip-flower">🌷</span>
+        <div class="tulip-stem"></div>
+        <div class="tulip-leaf"></div>
+      </div>
+      <div class="tulip bud" id="tulip4">
+        <span class="tulip-flower">🌷</span>
+        <div class="tulip-stem"></div>
+        <div class="tulip-leaf"></div>
+      </div>
+      <div class="tulip bud" id="tulip5">
+        <span class="tulip-flower">🌷</span>
+        <div class="tulip-stem"></div>
+        <div class="tulip-leaf"></div>
+      </div>
+    </div>
+
+    <!-- Envelope -->
+    <div class="envelope" id="envelope">
+      <div class="flap"></div>
+      <div class="seal" id="seal">🌱</div>
+      <div class="letter">
+        <h1>Happy and Beautiful Valentine's Day ✨Жаным✨</h1>
+        <p>
+         First of all, I wish and pray that we can reunite as soon as possible, InshaAllah. I miss you so much 🫂
+        </p>
+        <p>
+          InshaAllah there are many years and many Valentine's days that is waiting to be celebrated by ⭐US⭐ 💖
+        </p>
+        <p>
+          Bütün kalbimle seni seviyorum, canım. Sen benim hayatımın en güzel çiçeğisin 🌷💚
+        </p>
+        <p>
+          Benim hayatımda olduğun için bütün gönlüm ile minnettarım, ve her geçen gün sana olan sevgim daha da büyüyor,
+        </p>
+        <p>
+          Sen benim en büyük ilham kaynağımsın, ve seninle geçirdiğim her an benim için en değerli anlardır. Sen benim hayatımın en güzel çiçeğisin 🌷💚
+        </p>
+        <div class="signature">
+          with Love,<br />
+          <strong>Stam 💚</strong>
+        </div>
+      </div>
+    </div>
+    <div class="hint">💚I Love ✨You✨💚</div>
+  </div>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const tulips = document.querySelectorAll('.tulip');
+    const seal = document.getElementById('seal');
+
+    envelope.addEventListener('click', () => {
+      // Open envelope
+      envelope.classList.add('open');
+      
+      // Remove seal with animation
+      if (seal) {
+        seal.style.opacity = '0';
+        seal.style.transform = 'translateX(-50%) scale(0.5)';
+        setTimeout(() => {
+          if (seal.parentNode) {
+            seal.remove();
+          }
+        }, 500);
+      }
+
+      // Bloom tulips with staggered delay
+      tulips.forEach((tulip, index) => {
+        setTimeout(() => {
+          tulip.classList.remove('bud');
+          tulip.classList.add('bloom');
+        }, index * 120); // 120ms delay between each tulip
+      });
+
+      // Spawn floating seeds/petals
+      spawnFloatingElements();
+    });
+
+    function spawnFloatingElements() {
+      const elements = ['🌷', '💝', '💖', '💚', '✨'];
+      
+      for (let i = 0; i < 15; i++) {
+        const element = document.createElement('div');
+        element.className = 'floating-element';
+        element.textContent = elements[Math.floor(Math.random() * elements.length)];
+        element.style.left = Math.random() * 100 + 'vw';
+        element.style.animationDelay = Math.random() * 3 + 's';
+        element.style.fontSize = (15 + Math.random() * 15) + 'px';
+        element.style.opacity = 0.4 + Math.random() * 0.3;
+        document.body.appendChild(element);
+
+        setTimeout(() => element.remove(), 9000);
+      }
+    }
+
+    // Optional: Reset for demo (remove in production)
+    // This allows re-opening if needed
+    function resetEverything() {
+      envelope.classList.remove('open');
+      tulips.forEach(tulip => {
+        tulip.classList.remove('bloom');
+        tulip.classList.add('bud');
+      });
+      if (!document.getElementById('seal')) {
+        const newSeal = document.createElement('div');
+        newSeal.className = 'seal';
+        newSeal.id = 'seal';
+        newSeal.textContent = '❤️';
+        document.querySelector('.envelope').appendChild(newSeal);
+      }
+    }
+
+    // Double tap to reset (optional, for demo purposes)
+    // envelope.addEventListener('dblclick', resetEverything);
+  </script>
+</body>
+</html>
